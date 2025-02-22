@@ -1,8 +1,13 @@
 require('dotenv').config();
 const { Telegraf } = require('telegraf');
 const Database = require('better-sqlite3');
-const db = new Database('./tokens.db');
+const path = require('path');
 
+// Use /tmp directory for the database file, which is writable in Vercel lambdas
+const dbPath = path.join('/tmp', 'tokens.db');
+const db = new Database(dbPath, { fileMustExist: false }); // Allow creating the file if it doesn’t exist
+
+// Create the tokens table if it doesn’t exist
 db.exec(`CREATE TABLE IF NOT EXISTS tokens (
   address TEXT PRIMARY KEY,
   chain TEXT,
