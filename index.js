@@ -1,11 +1,9 @@
 require('dotenv').config();
 const { Telegraf } = require('telegraf');
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
+const db = new Database('./tokens.db');
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
-const db = new sqlite3.Database('./tokens.db');
-
-db.run(`CREATE TABLE IF NOT EXISTS tokens (
+db.exec(`CREATE TABLE IF NOT EXISTS tokens (
   address TEXT PRIMARY KEY,
   chain TEXT,
   price REAL,
@@ -13,6 +11,8 @@ db.run(`CREATE TABLE IF NOT EXISTS tokens (
   liquidity REAL,
   created_at INTEGER
 )`);
+
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 async function monitorTokens() {
   const dummyToken = { name: "BeastCoin", price: Math.random() * 10, liquidity: Math.random() * 5000 };
