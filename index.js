@@ -3,14 +3,8 @@ const { Telegraf } = require('telegraf');
 const sqlite3 = require('sqlite3').verbose();
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
-
-bot.on('message', (ctx) => {
-  const chatId = ctx.chat.id;
-  console.log(`Your Chat ID is: ${chatId}`);
-  bot.telegram.sendMessage(chatId, `Hey @jambohuggy! Your Chat ID is: ${chatId}`);
-});
-
 const db = new sqlite3.Database('./tokens.db');
+
 db.run(`CREATE TABLE IF NOT EXISTS tokens (
   address TEXT PRIMARY KEY,
   chain TEXT,
@@ -47,4 +41,8 @@ setInterval(monitorTokens, 5 * 60 * 1000);
 monitorTokens();
 
 bot.launch();
-console.log("Beast Bot is running!");
+console.log("Beast Bot is running in polling mode!");
+
+module.exports = (req, res) => {
+  res.status(200).send("Beast Bot is active!");
+};
