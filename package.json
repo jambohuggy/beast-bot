@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
+ "dependencies": {
+    "telegraf": "^4.16.3",
     "sqlite3": "^5.1.7",
-    "telegraf": "^4.16.3"
+    "axios": "^1.6.8"
+  },
+  "sqlite3": {
+    "build_from_source": true
   }
 }
