@@ -20,6 +20,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS tokens (
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 async function monitorTokens() {
+  // Revert to random data for production
   const dummyToken = { name: "BeastCoin", price: Math.random() * 10, liquidity: Math.random() * 5000 };
   console.log(`[${new Date().toLocaleTimeString()}] Checking ${dummyToken.name} - Price: $${dummyToken.price.toFixed(2)}, Liquidity: $${dummyToken.liquidity.toFixed(2)}`);
   try {
